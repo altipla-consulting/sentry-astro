@@ -5,7 +5,7 @@ import type { SentryOptions } from './options.js'
 type VitePlugin = Required<AstroConfig['vite']>['plugins'][number]
 
 export const sentryAstro = (options: SentryOptions): AstroIntegration => {
-  const virtualModuleId = 'virtual:@altipla/astro-sentry/config'
+  const virtualModuleId = 'virtual:@altipla/sentry-astro/config'
   const resolvedVirtualModuleId = '\0' + virtualModuleId
 
   return {

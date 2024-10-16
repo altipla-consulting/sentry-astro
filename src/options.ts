@@ -6,7 +6,7 @@ export type SentryOptions = {
   sourceMapsProject?: string
 }
 
-export function commonOptions(options: SentryOptions): Options {
+export function generateOptions(options: SentryOptions): Options {
   return {
     enabled: options.forceEnabled || process.env.NODE_ENV === 'production',
     dsn: process.env.SENTRY_DSN,

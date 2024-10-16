@@ -4,6 +4,6 @@ declare namespace App {
   }
 }
 
-declare module 'virtual:@altipla/astro-sentry/config' {
+declare module 'virtual:@altipla/sentry-astro/config' {
   export const sentryOptions: import('./options.ts').SentryOptions
 }

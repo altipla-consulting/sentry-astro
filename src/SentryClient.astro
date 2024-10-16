@@ -1,8 +1,10 @@
 ---
 import { getTraceMetaTags } from '@sentry/node'
+import { sentryOptions } from 'virtual:@altipla/sentry-astro/config'
+import { generateOptions } from './options'
 ---
 
 <Fragment set:html={getTraceMetaTags()} />
-<script define:vars={{ sentry: Astro.locals.sentry }}>
+<script define:vars={{ sentry: generateOptions(sentryOptions) }}>
   window.__sentry = sentry
 </script>

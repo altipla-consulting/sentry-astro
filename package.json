@@ -23,7 +23,7 @@
     "build": "tsc && cp src/SentryClient.astro dist/SentryClient.astro",
     "lint": "tsc --noEmit && eslint src",
     "fix": "eslint --fix src",
-    "prepublishOnly": "pnpm build",
+    "prepublishOnly": "pnpm lint && pnpm build",
     "test": "echo 0"
   },
   "keywords": [

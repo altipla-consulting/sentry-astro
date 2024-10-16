@@ -12,11 +12,11 @@ import type { APIContext, MiddlewareHandler } from 'astro'
 import { continueTrace } from '@sentry/node'
 import { stripUrlQueryAndFragment, winterCGRequestToRequestData } from '@sentry/utils'
 import type { SpanAttributes } from '@sentry/types'
-import { sentryOptions } from 'virtual:@altipla/astro-sentry/config'
-import { commonOptions } from './options.js'
+import { sentryOptions } from 'virtual:@altipla/sentry-astro/config'
+import { generateOptions } from './options.js'
 
 if (process.env.SENTRY_DSN) {
-  init(commonOptions(sentryOptions))
+  init(generateOptions(sentryOptions))
 }
 
 export const onRequest: MiddlewareHandler = (ctx, next) => {
@@ -62,8 +62,6 @@ export const onRequest: MiddlewareHandler = (ctx, next) => {
               op: 'http.server',
             },
             async (span) => {
-              ctx.locals.sentry = commonOptions(sentryOptions)
-
               let response = await next()
               if (response.status) {
                 setHttpStatus(span, response.status)
