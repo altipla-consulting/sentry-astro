@@ -63,16 +63,32 @@ export const sentryAstro = (options: SentryOptions): AstroIntegration => {
   }
 }
 
-function buildClientSnippet(_options: SentryOptions) {
+function buildClientSnippet(options: SentryOptions) {
+  if (options.tracesSampleRate) {
+    return `
+      import { init, browserTracingIntegration } from '@sentry/vue'
+
+      if (window.__sentry) {
+        init({
+          ...window.__sentry,
+          integrations: integrations => {
+            integrations = integrations.filter(integration => integration.name !== 'Vue')
+            integrations.push(browserTracingIntegration())
+            return integrations
+          },
+        })
+      }
+    `
+  }
+
   return `
-    import { init, browserTracingIntegration } from '@sentry/vue'
+    import { init } from '@sentry/vue'
 
     if (window.__sentry) {
       init({
         ...window.__sentry,
         integrations: integrations => {
-          integrations = integrations.filter(integration => integration.name !== 'Vue'),
-          integrations.push(browserTracingIntegration())
+          integrations = integrations.filter(integration => integration.name !== 'Vue')
           return integrations
         },
       })

@@ -2,7 +2,7 @@ import type { Options } from '@sentry/types'
 
 export type SentryOptions = {
   forceEnabled?: boolean
-  tracesSampleRate: number
+  tracesSampleRate?: number
   sourceMapsProject?: string
 }
 
