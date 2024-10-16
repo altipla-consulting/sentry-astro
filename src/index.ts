@@ -63,9 +63,11 @@ function buildClientSnippet(_options: SentryOptions) {
     if (window.__sentry) {
       init({
         ...window.__sentry,
-        integrations: [
-          browserTracingIntegration(),
-        ],
+        integrations: integrations => {
+          integrations = integrations.filter(integration => integration.name !== 'Vue'),
+          integrations.push(browserTracingIntegration())
+          return integrations
+        },
       })
     }
   `
