@@ -1,0 +1,47 @@
+{
+  "name": "@altipla/sentry-astro",
+  "version": "0.0.0",
+  "description": "Sentry configuration ready to use in our projects with minimal configuration.",
+  "type": "module",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/altipla-consulting/sentry-astro.git"
+  },
+  "scripts": {
+    "build": "tsc && cp src/SentryClient.astro dist/SentryClient.astro",
+    "lint": "tsc --noEmit && eslint src",
+    "fix": "eslint --fix src",
+    "test": ""
+  },
+  "keywords": [
+    "sentry",
+    "astro"
+  ],
+  "author": "Altipla Consulting",
+  "license": "MIT",
+  "dependencies": {
+    "@sentry/node": "^8.34.0",
+    "@sentry/utils": "^8.34.0",
+    "@sentry/vite-plugin": "^2.22.5",
+    "@sentry/vue": "^8.34.0"
+  },
+  "devDependencies": {
+    "@altipla/eslint-config-ts": "^1.0.3",
+    "@sentry/types": "^8.34.0",
+    "astro": "^4.16.5",
+    "eslint": "^9.12.0",
+    "typescript": "^5.6.3"
+  },
+  "bugs": {
+    "url": "https://github.com/altipla-consulting/sentry-astro/issues"
+  },
+  "homepage": "https://github.com/altipla-consulting/sentry-astro#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "src"
+  ]
+}

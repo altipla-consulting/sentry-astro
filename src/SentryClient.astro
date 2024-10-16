@@ -1,0 +1,8 @@
+---
+import { getTraceMetaTags } from '@sentry/node'
+---
+
+<Fragment set:html={getTraceMetaTags()} />
+<script define:vars={{ sentry: Astro.locals.sentry }}>
+  window.__sentry = sentry
+</script>
