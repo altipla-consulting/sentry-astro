@@ -8,6 +8,17 @@
     "type": "git",
     "url": "git+https://github.com/altipla-consulting/sentry-astro.git"
   },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./middleware": {
+      "import": "./dist/middleware.js",
+      "types": "./dist/middleware.d.ts"
+    },
+    "./SentryClient.astro": "./dist/SentryClient.astro"
+  },
   "scripts": {
     "build": "tsc && cp src/SentryClient.astro dist/SentryClient.astro",
     "lint": "tsc --noEmit && eslint src",
