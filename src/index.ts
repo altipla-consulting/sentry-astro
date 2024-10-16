@@ -12,6 +12,26 @@ export const sentryAstro = (options: SentryOptions): AstroIntegration => {
     name: '@altipla/sentry-astro',
     hooks: {
       'astro:config:setup': async ({ command, updateConfig, injectScript, addMiddleware }) => {
+        updateConfig({
+          vite: {
+            plugins: [
+              {
+                name: 'vite-plugin-sentry-astro',
+                resolveId(id) {
+                  if (id === virtualModuleId) {
+                    return resolvedVirtualModuleId
+                  }
+                },
+                load(id) {
+                  if (id === resolvedVirtualModuleId) {
+                    return `export const sentryOptions = ${JSON.stringify(options)};`
+                  }
+                },
+              } satisfies VitePlugin,
+            ],
+          },
+        })
+
         if (command === 'build' && options.sourceMapsProject) {
           updateConfig({
             vite: {
@@ -27,19 +47,6 @@ export const sentryAstro = (options: SentryOptions): AstroIntegration => {
                     assets: ['dist/**/*'],
                   },
                 }),
-                {
-                  name: 'vite-plugin-sentry-astro',
-                  resolveId(id) {
-                    if (id === virtualModuleId) {
-                      return resolvedVirtualModuleId
-                    }
-                  },
-                  load(id) {
-                    if (id === resolvedVirtualModuleId) {
-                      return `export const sentryOptions = ${JSON.stringify(options)};`
-                    }
-                  },
-                } satisfies VitePlugin,
               ],
             },
           })
