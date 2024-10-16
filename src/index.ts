@@ -12,7 +12,7 @@ export const sentryAstro = (options: SentryOptions): AstroIntegration => {
     name: '@altipla/sentry-astro',
     hooks: {
       'astro:config:setup': async ({ command, updateConfig, injectScript, addMiddleware }) => {
-        if (command === 'build') {
+        if (command === 'build' && options.sourceMapsProject) {
           updateConfig({
             vite: {
               build: {
