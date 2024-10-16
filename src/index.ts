@@ -1,6 +1,12 @@
 import type { AstroConfig, AstroIntegration } from 'astro'
 import { sentryVitePlugin } from '@sentry/vite-plugin'
 import type { SentryOptions } from './options.js'
+import type { App } from 'vue'
+import { addIntegration, vueIntegration } from '@sentry/vue'
+
+export function configureSentry(app: App) {
+  addIntegration(vueIntegration({ app }))
+}
 
 type VitePlugin = Required<AstroConfig['vite']>['plugins'][number]
 
