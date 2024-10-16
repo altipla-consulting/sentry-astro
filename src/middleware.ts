@@ -62,6 +62,8 @@ export const onRequest: MiddlewareHandler = (ctx, next) => {
               op: 'http.server',
             },
             async (span) => {
+              ctx.locals.sentry = commonOptions(sentryOptions)
+
               let response = await next()
               if (response.status) {
                 setHttpStatus(span, response.status)
