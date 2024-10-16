@@ -4,7 +4,7 @@ import type { SentryOptions } from './options.js'
 import type { App } from 'vue'
 import { addIntegration, vueIntegration } from '@sentry/vue'
 
-export function configureSentry(app: App) {
+export function configureSentryVue(app: App) {
   addIntegration(vueIntegration({ app }))
 }
 
