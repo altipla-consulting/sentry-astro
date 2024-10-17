@@ -55,7 +55,7 @@ export const sentryAstro = (options: SentryOptions): AstroIntegration => {
         injectScript(
           'page',
           `
-            import { init } from '@sentry/vue'
+            import { init } from '@altipla/sentry-astro/vue'
 
             if (window.__sentry) {
               init({
