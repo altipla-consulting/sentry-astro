@@ -20,9 +20,6 @@ importers:
       '@sentry/vite-plugin':
         specifier: ^2.22.5
         version: 2.22.5
-      '@sentry/vue':
-        specifier: ^8.34.0
-        version: 8.34.0(vue@3.5.12(typescript@5.6.3))
     devDependencies:
       '@altipla/eslint-config-ts':
         specifier: ^1.0.3
@@ -30,6 +27,9 @@ importers:
       '@sentry/types':
         specifier: ^8.34.0
         version: 8.34.0
+      '@sentry/vue':
+        specifier: ^8.34.0
+        version: 8.34.0(vue@3.5.12(typescript@5.6.3))
       astro:
         specifier: '*'
         version: 4.16.5(@types/node@22.7.5)(rollup@4.24.0)(typescript@5.6.3)
