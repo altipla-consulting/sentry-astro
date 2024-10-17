@@ -28,8 +28,11 @@ importers:
         specifier: ^8.34.0
         version: 8.34.0
       '@sentry/vue':
-        specifier: ^8.34.0
+        specifier: '*'
         version: 8.34.0(vue@3.5.12(typescript@5.6.3))
+      '@trpc/server':
+        specifier: '*'
+        version: 10.45.2
       astro:
         specifier: '*'
         version: 4.16.5(@types/node@22.7.5)(rollup@4.24.0)(typescript@5.6.3)
@@ -910,6 +913,9 @@ packages:
 
   '@shikijs/vscode-textmate@9.3.0':
     resolution: {integrity: sha512-jn7/7ky30idSkd/O5yDBfAnVt+JJpepofP/POZ1iMOxK59cOfqIgg/Dj0eFsjOTMw+4ycJN0uhZH/Eb0bs/EUA==}
+
+  '@trpc/server@10.45.2':
+    resolution: {integrity: sha512-wOrSThNNE4HUnuhJG6PfDRp4L2009KDVxsd+2VYH8ro6o/7/jwYZ8Uu5j+VaW+mOmc8EHerHzGcdbGNQSAUPgg==}
 
   '@types/babel__core@7.20.5':
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
@@ -3586,6 +3592,8 @@ snapshots:
       '@types/hast': 3.0.4
 
   '@shikijs/vscode-textmate@9.3.0': {}
+
+  '@trpc/server@10.45.2': {}
 
   '@types/babel__core@7.20.5':
     dependencies:

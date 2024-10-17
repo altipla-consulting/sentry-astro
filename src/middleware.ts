@@ -38,10 +38,12 @@ export const onRequest: MiddlewareHandler = (ctx, next) => {
         return err
       }
 
-      logger.info({
-        msg: 'Sentry error captured',
-        id: captureException(prepareError(err)),
-      })
+      if (process.env.SENTRY_DSN) {
+        logger.info({
+          msg: 'Sentry error captured',
+          id: captureException(prepareError(err)),
+        })
+      }
       throw err
     }
   })
