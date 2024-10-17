@@ -10,6 +10,8 @@ pnpm add @altipla/sentry-astro
 
 ## Usage
 
+### Server
+
 Include the Sentry plugin in your `astro.config.ts` file, ensuring it is listed before any other integrations. Update the `sourceMapsProject` value to the correct project name for source map uploads.
 
 ```ts
@@ -34,6 +36,8 @@ export default defineConfig({
 })
 
 ```
+
+### Client
 
 To track client-side errors, add the `<SentryClient />` component in the `<head>` section of your layout file (e.g., Layout.astro).
 
@@ -68,9 +72,30 @@ To capture Vue component errors, configure Sentry in your Vue app. In your `app.
 
 ```ts
 import type { App } from 'vue'
-import { configureSentryVue } from '@sentry/vue'
+import { sentryVue } from '@sentry/vue'
 
 export default (app: App) => {
-  configureSentryVue(app)
+  sentryVue(app)
+}
+```
+
+### tRPC
+
+To capture tRPC errors configure the standard option when declaring the router. In the `[trpc].ts` file or equivalent:
+
+```ts
+import { fetchRequestHandler } from '@trpc/server/adapters/fetch'
+import type { APIRoute } from 'astro'
+import { appRouter } from '~/routers'
+import { sentryTRPC } from '@altipla/sentry-astro'
+
+export let ALL: APIRoute = async ({ request, locals }) => {
+  return await fetchRequestHandler({
+    req: request,
+    router: appRouter,
+    endpoint: '/api/trpc',
+    createContext: () => locals,
+    onError: sentryTRPC,
+  })
 }
 ```

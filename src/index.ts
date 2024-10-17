@@ -2,15 +2,24 @@ import type { AstroConfig, AstroIntegration } from 'astro'
 import { sentryVitePlugin } from '@sentry/vite-plugin'
 import type { SentryOptions } from './options.js'
 import type { App } from 'vue'
-import { addIntegration, vueIntegration } from '@sentry/vue'
+import { addIntegration, captureException, vueIntegration } from '@sentry/vue'
+import { prepareError } from './prepare.js'
+import { logger } from '@altipla/logging'
 
-export function configureSentryVue(app: App) {
+export function sentryVue(app: App) {
   addIntegration(vueIntegration({ app }))
 }
 
-type VitePlugin = Required<AstroConfig['vite']>['plugins'][number]
+export function sentryTRPC(err: unknown) {
+  logger.info({
+    msg: 'Sentry error captured',
+    id: captureException(prepareError(err)),
+  })
+}
 
 export const sentryAstro = (options: SentryOptions): AstroIntegration => {
+  type VitePlugin = Required<AstroConfig['vite']>['plugins'][number]
+
   const virtualModuleId = 'virtual:@altipla/sentry-astro/config'
   const resolvedVirtualModuleId = '\0' + virtualModuleId
 
@@ -58,8 +67,22 @@ export const sentryAstro = (options: SentryOptions): AstroIntegration => {
           })
         }
 
-        injectScript('page', buildClientSnippet(options))
+        injectScript(
+          'page',
+          `
+            import { init } from '@sentry/vue'
 
+            if (window.__sentry) {
+              init({
+                ...window.__sentry,
+                integrations: integrations => {
+                  integrations = integrations.filter(integration => integration.name !== 'Vue')
+                  return integrations
+                },
+              })
+            }
+          `
+        )
         addMiddleware({
           order: 'pre',
           entrypoint: '@altipla/sentry-astro/middleware',
@@ -67,37 +90,4 @@ export const sentryAstro = (options: SentryOptions): AstroIntegration => {
       },
     },
   }
-}
-
-function buildClientSnippet(options: SentryOptions) {
-  if (options.tracesSampleRate) {
-    return `
-      import { init, browserTracingIntegration } from '@sentry/vue'
-
-      if (window.__sentry) {
-        init({
-          ...window.__sentry,
-          integrations: integrations => {
-            integrations = integrations.filter(integration => integration.name !== 'Vue')
-            integrations.push(browserTracingIntegration())
-            return integrations
-          },
-        })
-      }
-    `
-  }
-
-  return `
-    import { init } from '@sentry/vue'
-
-    if (window.__sentry) {
-      init({
-        ...window.__sentry,
-        integrations: integrations => {
-          integrations = integrations.filter(integration => integration.name !== 'Vue')
-          return integrations
-        },
-      })
-    }
-  `
 }

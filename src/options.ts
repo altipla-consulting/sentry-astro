@@ -2,8 +2,8 @@ import type { Options } from '@sentry/types'
 
 export type SentryOptions = {
   forceEnabled?: boolean
-  tracesSampleRate?: number
   sourceMapsProject?: string
+  debug?: boolean
 }
 
 export function generateOptions(options: SentryOptions): Options {
@@ -12,6 +12,6 @@ export function generateOptions(options: SentryOptions): Options {
     dsn: process.env.SENTRY_DSN,
     environment: process.env.NODE_ENV || 'development',
     release: process.env.VERSION || 'dev',
-    tracesSampleRate: options.tracesSampleRate,
+    debug: options.debug,
   }
 }
