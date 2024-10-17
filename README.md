@@ -72,7 +72,7 @@ To capture Vue component errors, configure Sentry in your Vue app. In your `app.
 
 ```ts
 import type { App } from 'vue'
-import { sentryVue } from '@sentry/vue'
+import { sentryVue } from '@altipla/sentry-astro/vue'
 
 export default (app: App) => {
   sentryVue(app)
@@ -87,7 +87,7 @@ To capture tRPC errors configure the standard option when declaring the router. 
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch'
 import type { APIRoute } from 'astro'
 import { appRouter } from '~/routers'
-import { sentryTRPC } from '@altipla/sentry-astro'
+import { sentryTRPC } from '@altipla/sentry-astro/trpc'
 
 export let ALL: APIRoute = async ({ request, locals }) => {
   return await fetchRequestHandler({

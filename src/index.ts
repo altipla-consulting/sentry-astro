@@ -1,24 +1,6 @@
 import type { AstroConfig, AstroIntegration } from 'astro'
 import { sentryVitePlugin } from '@sentry/vite-plugin'
 import type { SentryOptions } from './options.js'
-import type { App } from 'vue'
-import { captureException, setContext } from '@sentry/node'
-import { addIntegration as addIntegrationVue, vueIntegration } from '@sentry/vue'
-import { prepareError } from './prepare.js'
-import { logger } from '@altipla/logging'
-
-export function sentryVue(app: App) {
-  addIntegrationVue(vueIntegration({ app }))
-}
-
-export function sentryTRPC({ error, input, path }: any) {
-  setContext('trpc', { input })
-  logger.info({
-    msg: 'Sentry error captured',
-    id: captureException(prepareError(error)),
-    path,
-  })
-}
 
 export const sentryAstro = (options: SentryOptions): AstroIntegration => {
   type VitePlugin = Required<AstroConfig['vite']>['plugins'][number]

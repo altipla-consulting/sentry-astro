@@ -17,6 +17,14 @@
       "import": "./dist/middleware.js",
       "types": "./dist/middleware.d.ts"
     },
+    "./trpc": {
+      "import": "./dist/trpc.js",
+      "types": "./dist/trpc.d.ts"
+    },
+    "./vue": {
+      "import": "./dist/vue.js",
+      "types": "./dist/vue.d.ts"
+    },
     "./SentryClient.astro": "./dist/SentryClient.astro"
   },
   "scripts": {
