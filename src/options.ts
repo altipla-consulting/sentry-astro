@@ -1,8 +1,11 @@
 import type { Options } from '@sentry/types'
 
 export type SentryOptions = {
+  sourceMaps?: {
+    org: string
+    project: string
+  }
   forceEnabled?: boolean
-  sourceMapsProject?: string
   debug?: boolean
 }
 

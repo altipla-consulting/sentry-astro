@@ -32,7 +32,7 @@ export const sentryAstro = (options: SentryOptions): AstroIntegration => {
           },
         })
 
-        if (command === 'build' && options.sourceMapsProject) {
+        if (command === 'build' && options.sourceMaps) {
           updateConfig({
             vite: {
               build: {
@@ -41,7 +41,8 @@ export const sentryAstro = (options: SentryOptions): AstroIntegration => {
               plugins: [
                 sentryVitePlugin({
                   authToken: process.env.SENTRY_AUTH_TOKEN,
-                  project: options.sourceMapsProject,
+                  project: options.sourceMaps.project,
+                  org: options.sourceMaps.org,
                   telemetry: false,
                   sourcemaps: {
                     assets: ['dist/**/*'],
