@@ -7,6 +7,9 @@ import { logger } from '@altipla/logging'
 import { prepareError } from './prepare.js'
 
 if (process.env.SENTRY_DSN) {
+  // @ts-expect-error Remove problematic Sentry imports interceptor.
+  globalThis._sentryEsmLoaderHookRegistered = true
+
   logger.info({
     msg: 'Sentry enabled',
     dsn: process.env.SENTRY_DSN,
