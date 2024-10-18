@@ -12,13 +12,16 @@ pnpm add @altipla/sentry-astro
 
 ### Server
 
-Include the Sentry plugin in your `astro.config.ts` file, ensuring it is listed before any other integrations. Update the `sourceMapsProject` value to the correct project name for source map uploads.
+Include the Sentry plugin in your `astro.config.ts` file, ensuring it is listed before any other integrations. Update the `sourceMaps` values to the correct project & org name for source map uploads.
 
 ```ts
 export default defineConfig({
   integrations: [
     sentryAstro({
-      sourceMapsProject: 'REPLACE_YOUR_PROJECT_NAME',
+      sourceMaps: {
+        project: 'REPLACE_YOUR_PROJECT_NAME',
+        org: 'REPLACE_YOUR_ORG_NAME',
+      },
     }),
     tailwind(...),
     vue({
