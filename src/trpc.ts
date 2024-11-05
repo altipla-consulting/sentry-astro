@@ -6,6 +6,14 @@ import { TRPCError } from '@trpc/server'
 
 export function sentryTRPC({ error, input, path }: any) {
   setContext('trpc', { input })
+
+  let it: any = prepareError(error)
+  logger.error(it)
+  while (it.cause) {
+    it = it.cause
+    logger.error(it)
+  }
+
   if (process.env.SENTRY_DSN) {
     // Silence client code validation errors.
     if (error instanceof TRPCError) {
@@ -13,13 +21,6 @@ export function sentryTRPC({ error, input, path }: any) {
       if (code === 404 || code === 400) {
         throw error
       }
-    }
-
-    let it: any = prepareError(error)
-    logger.error(it)
-    while (it.cause) {
-      it = it.cause
-      logger.error(it)
     }
 
     logger.info({
