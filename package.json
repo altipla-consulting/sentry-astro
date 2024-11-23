@@ -1,6 +1,6 @@
 {
   "name": "@altipla/sentry-astro",
-  "version": "0.3.6",
+  "version": "0.4.0",
   "description": "Sentry configuration ready to use in our projects with minimal configuration.",
   "type": "module",
   "main": "dist/index.js",
