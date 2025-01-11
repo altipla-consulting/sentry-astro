@@ -1,10 +1,10 @@
-import { captureException, init, withIsolationScope } from '@sentry/node'
+import { init, withIsolationScope } from '@sentry/node'
 import type { APIContext, MiddlewareHandler } from 'astro'
 import { winterCGRequestToRequestData } from '@sentry/utils'
 import { sentryOptions } from 'virtual:@altipla/sentry-astro/config'
 import { generateOptions } from './options.js'
 import { logger } from '@altipla/logging'
-import { prepareError } from './prepare.js'
+import { captureError } from './capture.js'
 
 if (process.env.SENTRY_DSN) {
   // @ts-expect-error Remove problematic Sentry imports interceptor.
@@ -41,12 +41,8 @@ export const onRequest: MiddlewareHandler = (ctx, next) => {
         return err
       }
 
-      if (process.env.SENTRY_DSN) {
-        logger.info({
-          msg: 'Sentry error captured',
-          id: captureException(prepareError(err)),
-        })
-      }
+      captureError(err)
+
       throw err
     }
   })

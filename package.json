@@ -25,7 +25,11 @@
       "import": "./dist/vue.js",
       "types": "./dist/vue.d.ts"
     },
-    "./SentryClient.astro": "./dist/SentryClient.astro"
+    "./SentryClient.astro": "./dist/SentryClient.astro",
+    "./capture": {
+      "import": "./dist/capture.js",
+      "types": "./dist/capture.d.ts"
+    }
   },
   "scripts": {
     "build": "tsc && cp src/SentryClient.astro dist/SentryClient.astro",

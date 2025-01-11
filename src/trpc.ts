@@ -1,18 +1,10 @@
-import { captureException, setContext } from '@sentry/node'
-import { prepareError } from './prepare.js'
-import { logger } from '@altipla/logging'
+import { setContext } from '@sentry/node'
 import { getHTTPStatusCodeFromError } from '@trpc/server/http'
 import { TRPCError } from '@trpc/server'
+import { captureError } from './capture.js'
 
 export function sentryTRPC({ error, input, path }: any) {
   setContext('trpc', { input })
-
-  let it: any = prepareError(error)
-  logger.error(it)
-  while (it.cause) {
-    it = it.cause
-    logger.error(it)
-  }
 
   if (process.env.SENTRY_DSN) {
     // Silence client code validation errors.
@@ -23,10 +15,6 @@ export function sentryTRPC({ error, input, path }: any) {
       }
     }
 
-    logger.info({
-      msg: 'Sentry error captured',
-      id: captureException(prepareError(error)),
-      path,
-    })
+    captureError(error, { path })
   }
 }
