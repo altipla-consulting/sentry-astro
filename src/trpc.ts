@@ -12,7 +12,7 @@ export function sentryTRPC({ error, input, path }: any) {
     let code = getHTTPStatusCodeFromError(error)
     if (code === 404 || code === 400) {
       logger.error(error)
-      throw error
+      return
     }
   }
 
